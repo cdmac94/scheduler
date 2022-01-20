@@ -1,16 +1,18 @@
 import React, { Fragment } from "react";
-import Appointments from "components/Appointments";
-import Header from "./Header";
 import "components/Appointments/styles.scss";
 
-export default function Application(props) {
+import Header from "./Header";
+import Empty from "./Empty";
+import Show from "./Show";
 
-  const {time} = props;
+export default function Appointment(props) {
+
+  const {time, id, interview} = props;
 
   return (
     <article className="appointment">
-      {props.time && <h2>Appointment at {time}</h2>}
-      {!props.time && <h2>No Appointment</h2>}
+      <Header time={time} />
+      {props.interview ? <Show id={id} student={interview.student}  interviewer={interview.interviewer.name}/> : <Empty />}
     </article>
   )
   
