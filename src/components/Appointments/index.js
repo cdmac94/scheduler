@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import "components/Appointments/styles.scss";
 
 import Header from "./Header";
