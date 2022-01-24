@@ -1,4 +1,4 @@
-export function getAppointmentsForDay(state, day) {
+const getAppointmentsForDay = function (state, day) {
   const appArr = [];
   state.days.map(dayObj => {
     if (dayObj.name === day) {
@@ -9,7 +9,7 @@ export function getAppointmentsForDay(state, day) {
   return apps;
 }
 
-export function getInterview(state, interview) {
+const getInterview = function(state, interview) {
   if (!interview) {
     return null
   }
@@ -19,5 +19,18 @@ export function getInterview(state, interview) {
     student: student,
     interviewer: interviewer
   }
-
 }
+  
+const getInterviewersForDay = function (state, day) {
+    const interviewerArr = [];
+    state.days.map(dayObj => {
+      if (dayObj.name === day) {
+        dayObj.interviewers.forEach(interviewerId => interviewerArr.push(interviewerId))
+      }
+    });
+    const interviewers = interviewerArr.map((id) => state.interviewers[id]);
+    return interviewers;
+  }
+
+
+export {getInterview, getAppointmentsForDay, getInterviewersForDay }
