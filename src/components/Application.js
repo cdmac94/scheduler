@@ -49,6 +49,10 @@ import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "help
 
 export default function Application(props) {
 
+  function bookInterview(id, interview) {
+    console.log(id, interview);
+  }
+
 
   const [state, setState] = useState({
     day: 'Monday',
@@ -66,7 +70,6 @@ export default function Application(props) {
       axios.get('/api/interviewers')
     ]).then((all) => {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
-      console.log(all[2].data);
     })
     .catch((error) => console.log(error))
   }, []);
@@ -83,6 +86,7 @@ export default function Application(props) {
         time = {appointment.time}
         interview = {interview}
         interviewers = { interviewers }
+        bookInterview = { bookInterview }
         />
       )
   });
@@ -101,6 +105,7 @@ export default function Application(props) {
           days={state.days}
           value={state.day}
           onChange={setDay}
+          bookInterview = { bookInterview }
           />
         </nav>
         <img
