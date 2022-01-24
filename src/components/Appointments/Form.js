@@ -5,7 +5,7 @@ import InterviewerList from "components/InterviewerList";
 
 export default function Form(props) {
 
-  const { student, interviewer, interviewers, onSave, onCancel} = props;
+  const { student, interview, interviewers, onSave, onCancel} = props;
   const [currentStudent, setCurrentStudent] = useState(props.student || "");
   const [currentInterviewer, setCurrentInterviewer] = useState(props.interviewer || null);
 
@@ -16,7 +16,7 @@ export default function Form(props) {
 
   function cancel () {
     reset();
-    props.onCancel();
+    onCancel();
   }
 
   const save = () => {
