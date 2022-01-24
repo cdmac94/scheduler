@@ -24,7 +24,13 @@ export default function Appointment(props) {
     if (interview.student && interview.interviewer) {
       transition(SAVE);
       props.bookInterview(id, interview)
-          transition(SHOW);
+      .then((res) => {
+        console.log(res)
+        if (res === 204){
+          transition(SHOW)
+        }
+      })
+      .catch((error) => console.log(error ));
     }
   };
 
