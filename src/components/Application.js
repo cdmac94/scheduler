@@ -26,7 +26,7 @@ export default function Application(props) {
     .then((res) => {
       const status = res.status
       setState(prev => ({
-        ...state,
+        ...prev,
         appointments
       }))
       return status;
@@ -49,7 +49,6 @@ export default function Application(props) {
     return axios.delete(`/api/appointments/${appointment.id}`)
       .then((res) => {
         const status = res.status
-        console.log(status)
         setState(prev => ({
           ...prev,
           appointments
