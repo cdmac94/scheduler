@@ -7,50 +7,10 @@ import Appointment from "components/Appointments/index.js";
 import axios from "axios";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm",
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer:{
-//         id: 3,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
-//   {
-//     id: 3,
-//     time: "2pm",
-//   },
-//   {
-//     id: 4,
-//     time: "3pm",
-//     interview: {
-//       student: "Archie Andrews",
-//       interviewer:{
-//         id: 4,
-//         name: "Cohana Roy",
-//         avatar: "https://i.imgur.com/FK8V841.jpg",
-//       }
-//     }
-//   },
-//   {
-//     id: 5,
-//     time: "4pm",
-//   }
-// ];
-
 
 export default function Application(props) {
 
   function bookInterview(id, interview) {
-    console.log(id, interview);
 
     const appointment = {
       ...state.appointments[id],
@@ -65,15 +25,41 @@ export default function Application(props) {
     return axios.put(`/api/appointments/${appointment.id}`, appointment)
     .then((res) => {
       const status = res.status
-      setState({
+      setState(prev => ({
         ...state,
         appointments
-      })
+      }))
       return status;
     })
     .catch((error) => console.log(error ));
   }
+  
+  function cancelInterview(id) {
 
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.delete(`/api/appointments/${appointment.id}`)
+      .then((res) => {
+        const status = res.status
+        console.log(status)
+        setState(prev => ({
+          ...prev,
+          appointments
+        }))
+        return status;
+      })
+      .catch((error) => console.log(error ));    
+  }
+  
+  
 
   const [state, setState] = useState({
     day: 'Monday',
@@ -108,6 +94,7 @@ export default function Application(props) {
         interview = {interview}
         interviewers = { interviewers }
         bookInterview = { bookInterview }
+        cancelInterview = { cancelInterview }
         />
       )
   });
@@ -127,6 +114,7 @@ export default function Application(props) {
           value={state.day}
           onChange={setDay}
           bookInterview = { bookInterview }
+          cancelInterview = { cancelInterview }
           />
         </nav>
         <img
