@@ -25,30 +25,40 @@ export default function Application(props) {
     return axios.put(`/api/appointments/${appointment.id}`, appointment)
     .then((res) => {
       const status = res.status
-      setState({
+      setState(prev => ({
         ...state,
         appointments
-      })
+      }))
       return status;
     })
     .catch((error) => console.log(error ));
   }
   
   function cancelInterview(id) {
-  
-    console.log("trying to delete");
-    // return axios.put(`/api/appointments/${appointment.id}`, appointment)
-    // .then((res) => {
-    //   const status = res.status
-    //   setState({
-    //     ...state,
-    //     appointments
-    //   })
-    //   return status;
-    // })
-    // .catch((error) => console.log(error ));
-  }
 
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.delete(`/api/appointments/${appointment.id}`)
+      .then((res) => {
+        const status = res.status
+        console.log(status)
+        setState(prev => ({
+          ...prev,
+          appointments
+        }))
+        return status;
+      })
+      .catch((error) => console.log(error ));    
+  }
+  
   
 
   const [state, setState] = useState({
@@ -84,6 +94,7 @@ export default function Application(props) {
         interview = {interview}
         interviewers = { interviewers }
         bookInterview = { bookInterview }
+        cancelInterview = { cancelInterview }
         />
       )
   });
@@ -103,6 +114,7 @@ export default function Application(props) {
           value={state.day}
           onChange={setDay}
           bookInterview = { bookInterview }
+          cancelInterview = { cancelInterview }
           />
         </nav>
         <img
