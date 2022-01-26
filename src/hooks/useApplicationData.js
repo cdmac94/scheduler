@@ -31,7 +31,7 @@ export default function useApplicationData() {
     return updateDays;
   };
 
-  const  bookInterview = function (id, interview, mode) {
+  const  bookInterview = function (id, interview) {
     
     const appointment = {
       ...state.appointments[id],
@@ -43,7 +43,7 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-      const spotsRemaing = mode === "EDITING" ? updateSpots(0) : updateSpots(-1);
+      const spotsRemaing = updateSpots(-1);
 
     return axios.put(`/api/appointments/${appointment.id}`, appointment)
     .then((res) => {
@@ -55,7 +55,7 @@ export default function useApplicationData() {
       }))
       return status;
     })
-    .catch((error) => console.log(error ));
+    .catch((error) => console.log(error));
   }
   
   const cancelInterview = function(id) {
@@ -82,8 +82,32 @@ export default function useApplicationData() {
         }))
         return status;
       })
-      .catch((error) => console.log(error ));    
+      .catch((error) => console.log(error));    
+  }
+
+  const editInterview = function (id, interview) {
+    
+    const appointment = {
+      ...state.appointments[id],
+      interview: { ...interview }
+    };
+    
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    return axios.put(`/api/appointments/${appointment.id}`, appointment)
+    .then((res) => {
+      const status = res.status
+      setState(prev => ({
+        ...prev,
+        appointments,
+      }))
+      return status;
+    })
+    .catch((error) => console.log(error));
   }
   
-  return { state, setDay, bookInterview, cancelInterview}
+  return { state, setDay, bookInterview, cancelInterview, editInterview}
 }
