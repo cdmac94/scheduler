@@ -9,7 +9,7 @@ export default function Form(props) {
   const [currentStudent, setCurrentStudent] = useState(props.student || "");
   const [currentInterviewer, setCurrentInterviewer] = useState(props.interviewer || null);
 
-  const reset = () => {
+  function reset()  {
     setCurrentStudent("")
     setCurrentInterviewer(null)
   }
@@ -17,12 +17,15 @@ export default function Form(props) {
   function cancel () {
     reset();
     onCancel();
-  }
+  };
 
-  const save = () => {
+  function save() {
     onSave(currentStudent, currentInterviewer);
   };
   
+
+
+
 
   return (
     <main className="appointment__card appointment__card--create">
@@ -33,12 +36,12 @@ export default function Form(props) {
           name = "name"
           type="text"
           value={currentStudent}
-          placeholder={interview ? student : "Enter Student Name"}
+          placeholder={student ? student : "Enter Student Name"}
           onChange={(event) => setCurrentStudent(event.target.value)}
         />
       </form>
       <InterviewerList 
-       interviewers={interviewers} value={currentInterviewer} onChange={(event) => setCurrentInterviewer(event)}
+       interviewers={interviewers} value={currentInterviewer} onChange={(event) => setCurrentInterviewer(event)} selected={props.selected}
       />
     </section>
     <section className="appointment__card-right">
