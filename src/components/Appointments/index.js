@@ -12,6 +12,8 @@ import Error from "./Error";
 
 export default function Appointment(props) {
 
+  // variables to be used with useVisualMode to ensure apropriate compenents are rendered
+
   const SHOW = "SHOW";
   const EMPTY = "EMPTY";
   const CREATE = "CREATE";
@@ -21,77 +23,70 @@ export default function Appointment(props) {
   const EDITING = "EDITING";
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
+  
+  const { mode, transition, back } = useVisualMode(
+    props.interview ? SHOW : EMPTY
+  );
 
-  const {time, id, interview} = props;
+  //functions for new interview form
 
   function save(name, interviewer) {
+    if (!name || !interviewer) {
+      transition(ERROR_SAVE);
+    }
 
     const interview = {
       student: name,
       interviewer
     };
-    if (name && interviewer) {
-      transition(SAVING);
-    }
-      props.bookInterview(id, interview)
+
+    transition(SAVING);
+    props.bookInterview(props.id, interview)
       .then(() => transition(SHOW))
       .catch(() => transition(ERROR_SAVE, true));
   };
 
   function edit(name, interviewer) {
-
+    
     const interview = {
       student: name,
       interviewer
     };
 
-      transition(SAVING);
-      props.editInterview(id, interview)
-      .then((res) =>{
-        if(res === 204){
-          transition(SHOW)
-        }
-      })
-      .catch((res) => {
-      if(res === 500){
-        transition(ERROR_SAVE, true)
+    transition(SAVING);
+    props.editInterview(props.id, interview)
+    .then((res) =>{
+      if(res === 204){
+        transition(SHOW)
       }
-    });
-  };
-
-  function confirmDelete() {
-    transition(DELETE)
+    })
+    .catch(() => transition(ERROR_SAVE, true));
   };
 
   function deleteApp(event) {
-
+    
     transition(DELETING)
-    props.cancelInterview(id)
+    props.cancelInterview(props.id)
     .then((res) =>{
       if(res === 204){
         transition(EMPTY)
       }
     })
-    .catch((res) => {
-      if(res === 500){
-        transition(ERROR_DELETE, true)
-      }
-    });
-  }
+    .catch((res) => transition(ERROR_DELETE, true));
+  };
 
-  const { mode, transition, back } = useVisualMode(
-    props.interview ? SHOW : EMPTY
-  );
-
+  function confirmDelete() {
+    transition(DELETE)
+  };
   
   return (
     <article className="appointment">
-      <Header time = {time} />
+      <Header time = {props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show
-        student={interview.student}
-        interviewer={interview.interviewer}
+        student={props.interview.student}
+        interviewer={props.interview.interviewer}
         onDelete={confirmDelete}
         onEdit={() => transition(EDITING)}
         />
@@ -114,7 +109,7 @@ export default function Appointment(props) {
         interviewers={props.interviewers} 
         interviewer = {props.interview.interviewer.id} 
         value = {props.value} 
-        name ={interview.student} 
+        name ={props.interview.student} 
         onCancel={back} 
         onSave={edit}/>}
       {mode === ERROR_SAVE && <Error message = "Could not create appointment" onClose={back} />}

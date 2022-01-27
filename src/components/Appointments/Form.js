@@ -5,18 +5,18 @@ import InterviewerList from "components/InterviewerList";
 
 export default function Form(props) {
 
-  const { student,  interviewers, onSave, onCancel} = props;
+  // const { student, interviewer, interviewers, onSave, onCancel, name} = props;
   const [name, setName] = useState(props.name || "");
   const [currentInterviewer, setCurrentInterviewer] = useState(props.interviewer || null);
 
   function reset()  {
-    setName("")
-    setCurrentInterviewer(null)
+    setName("");
+    setCurrentInterviewer(null);
   }
 
   const cancel = () => {
     reset();
-    onCancel();
+    props.onCancel();
   };
 
   const [error, setError] = useState("");
@@ -28,7 +28,7 @@ export default function Form(props) {
     }
     
     setError("");
-    onSave(name, currentInterviewer);
+    props.onSave(name, currentInterviewer);
   };
   
 
@@ -48,7 +48,7 @@ export default function Form(props) {
       </form>
       <section className="appointment__validation">{error}</section>
       <InterviewerList 
-       interviewers={interviewers} value={currentInterviewer} onChange={(event) => setCurrentInterviewer(event)} selected={props.selected}
+       interviewers={props.interviewers} value={currentInterviewer} onChange={(event) => setCurrentInterviewer(event)} selected={props.selected}
       />
     </section>
     <section className="appointment__card-right">

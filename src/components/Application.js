@@ -1,85 +1,12 @@
 import React from "react";
-
 import "components/Application.scss";
 import DayList from "./DayList";
-import { useState, useEffect } from "react";
 import Appointment from "components/Appointments/index.js";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
 
 
 export default function Application(props) {
-
-  // function bookInterview(id, interview) {
-
-  //   const appointment = {
-  //     ...state.appointments[id],
-  //     interview: { ...interview }
-  //   };
-
-  //   const appointments = {
-  //     ...state.appointments,
-  //     [id]: appointment
-  //   };
-    
-  //   return axios.put(`/api/appointments/${appointment.id}`, appointment)
-  //   .then((res) => {
-  //     const status = res.status
-  //     setState(prev => ({
-  //       ...prev,
-  //       appointments
-  //     }))
-  //     return status;
-  //   })
-  //   .catch((error) => console.log(error ));
-  // }
-  
-  // function cancelInterview(id) {
-
-  //   const appointment = {
-  //     ...state.appointments[id],
-  //     interview: null
-  //   };
-    
-  //   const appointments = {
-  //     ...state.appointments,
-  //     [id]: appointment
-  //   };
-
-  //   return axios.delete(`/api/appointments/${appointment.id}`)
-  //     .then((res) => {
-  //       const status = res.status
-  //       setState(prev => ({
-  //         ...prev,
-  //         appointments
-  //       }))
-  //       return status;
-  //     })
-  //     .catch((error) => console.log(error ));    
-  // }
-  
-  
-
-  // const [state, setState] = useState({
-  //   day: 'Monday',
-  //   days: [],
-  //   appointments: {},
-  //   interviewers: {}
-  // });
-
-  
-  // const setDay = day => setState({ ...state, day });
-  
-  // useEffect(() => {
-  //   Promise.all([
-  //     axios.get('/api/days'),
-  //     axios.get('/api/appointments'),
-  //     axios.get('/api/interviewers')
-  //   ]).then((all) => {
-  //     setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
-  //   })
-  //   .catch((error) => console.log(error))
-  // }, []);
 
   const {
     state,
@@ -88,7 +15,8 @@ export default function Application(props) {
     cancelInterview,
     editInterview
   } = useApplicationData();
-  
+
+  // functions to render the appointments of the day with the approiate student and interviewer
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const appointment = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview)
@@ -113,7 +41,7 @@ export default function Application(props) {
       <section className="sidebar">
         <img
           className="sidebar--centered"
-          src="images/logo.png"
+          src="/images/logo.png"
           alt="Interview Scheduler"
         />
         <hr className="sidebar__separator sidebar--centered" />
