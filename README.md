@@ -10,7 +10,7 @@ API server can be found at https://github.com/cdmac94/scheduler-api
 
 ## What It Looks Like
 
-<img width="1792" alt="Screen Shot 2022-01-26 at 4 39 22 PM" src="https://user-images.githubusercontent.com/91284012/151271798-217002b6-345d-4d24-a4b5-abf595c9c12d.png">
+<img width="1792" alt="Screen Shot 2022-01-26 at 4 38 59 PM" src="https://user-images.githubusercontent.com/91284012/151272021-013927fb-e870-404a-b866-a530e460ef6c.png">
 
 :mag: Daily view
 
