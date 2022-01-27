@@ -10,12 +10,17 @@ API server can be found at https://github.com/cdmac94/scheduler-api
 
 ## What It Looks Like
 
+<img width="1792" alt="Screen Shot 2022-01-26 at 4 39 22 PM" src="https://user-images.githubusercontent.com/91284012/151271798-217002b6-345d-4d24-a4b5-abf595c9c12d.png">
 
 :mag: Daily view
 
+<img width="1792" alt="Screen Shot 2022-01-26 at 4 34 28 PM" src="https://user-images.githubusercontent.com/91284012/151271902-9c489cf8-117b-4b08-9352-5fada163423d.png">
+
 :book: Book appointment form
 
-:toilet: Deleting placeholder while aki api request
+<img width="1792" alt="Screen Shot 2022-01-26 at 4 48 51 PM" src="https://user-images.githubusercontent.com/91284012/151271935-4b79744a-9ee2-4706-8688-bc467a57f708.png">
+
+:toilet: Deleting placeholder while waiting for api request
 
 
 ## Setup
