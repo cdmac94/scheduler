@@ -4,8 +4,6 @@ import classNames from "classnames";
 
 export default function InterviewerListItem(props) {
 
-  const { id, name, avatar} = props;
-
   let interviewerClass = classNames("interviewers__item", {
     "interviewers__item--selected": props.selected,
     });
@@ -17,10 +15,10 @@ export default function InterviewerListItem(props) {
     <li className={interviewerClass} onClick={selectInterviewer}>
       <img
         className="interviewers__item-image"
-        src={avatar}
-        alt={name}
+        src={props.avatar}
+        alt={props.name}
       />
-      {props.selected && name}
+      {props.selected && props.name}
     </li>
   );
 }

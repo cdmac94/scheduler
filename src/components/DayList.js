@@ -1,6 +1,4 @@
-// import { findByDisplayValue } from "@testing-library/react";
 import React from "react";
-// import classNames from "classnames";
 import DayListItem from "./DayListItem";
 
 export default function DayList(props) {

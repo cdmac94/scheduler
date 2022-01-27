@@ -19,7 +19,7 @@ export default function useVisualMode(initial) {
      history.pop(); 
    }
    if (history.length > 0) {
-     setMode(history.slice(-1)[0])
+     setMode(history.slice(-1)[0]);
    }
  }
  return { mode, transition, back };

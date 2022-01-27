@@ -171,4 +171,4 @@ storiesOf("DayList", module)
       />
       <Appointment time="5pm" />
     </Fragment>
-  ))
+  ));

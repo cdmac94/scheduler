@@ -18,9 +18,9 @@ export default function useApplicationData() {
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
     ]).then((all) => {
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
+      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(error));
   }, []);
 
   const updateSpots = function(spot) {
@@ -47,7 +47,7 @@ export default function useApplicationData() {
 
     return axios.put(`/api/appointments/${appointment.id}`, appointment)
     .then((res) => {
-      const status = res.status
+      const status = res.status;
       setState(prev => ({
         ...prev,
         appointments,
@@ -109,5 +109,5 @@ export default function useApplicationData() {
     .catch((error) => console.log(error));
   }
   
-  return { state, setDay, bookInterview, cancelInterview, editInterview}
+  return { state, setDay, bookInterview, cancelInterview, editInterview};
 }
