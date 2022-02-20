@@ -20,7 +20,6 @@ export default function useApplicationData() {
     ]).then((all) => {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
     })
-    .catch((error) => console.log(error));
   }, []);
 
   const updateSpots = function(spot) {
@@ -42,20 +41,17 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-
-      const spotsRemaing = updateSpots(-1);
+    const spotsRemaing = updateSpots(-1);
 
     return axios.put(`/api/appointments/${appointment.id}`, appointment)
-    .then((res) => {
-      const status = res.status;
+    .then(() => {
+      console.log("Made it here!")
       setState(prev => ({
         ...prev,
         appointments,
         spotsRemaing
       }))
-      return status;
     })
-    .catch((error) => console.log(error));
   }
   
   const cancelInterview = function(id) {
@@ -70,19 +66,16 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    const spotsRemaing = updateSpots(1);
-
+    
     return axios.delete(`/api/appointments/${appointment.id}`)
-      .then((res) => {
-        const status = res.status
+    .then(() => {
+        const spotsRemaing = updateSpots(1);
         setState(prev => ({
           ...prev,
           appointments,
           spotsRemaing
         }))
-        return status;
-      })
-      .catch((error) => console.log(error));    
+      }) 
   }
 
   const editInterview = function (id, interview) {
@@ -98,15 +91,12 @@ export default function useApplicationData() {
     };
 
     return axios.put(`/api/appointments/${appointment.id}`, appointment)
-    .then((res) => {
-      const status = res.status
+    .then(() => {
       setState(prev => ({
         ...prev,
         appointments,
       }))
-      return status;
     })
-    .catch((error) => console.log(error));
   }
   
   return { state, setDay, bookInterview, cancelInterview, editInterview};
