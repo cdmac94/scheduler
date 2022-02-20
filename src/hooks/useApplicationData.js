@@ -41,17 +41,26 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    const spotsRemaing = updateSpots(-1);
 
-    return axios.put(`/api/appointments/${appointment.id}`, appointment)
-    .then(() => {
-      console.log("Made it here!")
-      setState(prev => ({
-        ...prev,
-        appointments,
-        spotsRemaing
-      }))
-    })
+    if (!state.appointments[id].interview) {
+    const spotsRemaing = updateSpots(-1);
+      return axios.put(`/api/appointments/${appointment.id}`, appointment)
+      .then(() => {
+        setState(prev => ({
+          ...prev,
+          appointments,
+          spotsRemaing
+        }))
+      })
+    } else {
+      return axios.put(`/api/appointments/${appointment.id}`, appointment)
+      .then(() => {
+        setState(prev => ({
+          ...prev,
+          appointments,
+        }))
+      })
+    }
   }
   
   const cancelInterview = function(id) {
